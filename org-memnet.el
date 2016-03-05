@@ -38,7 +38,7 @@
 
 (defun get-self-evaluation ()
   "Query the user for self-evaluation."
-  (let ((val (read-string "0-2: still not learned\n3-4: learned, but not perfectly so\n5: you've nailed it\n--------------------------\n RATE YOURSELF: ")))
+  (let ((val (read-string "0-2: still not learned\n3-4: learned, but not perfectly so\n5: you've nailed it\n--------------------------\n\n RATE YOURSELF: ")))
     (while (not (member val (list "0" "1" "2" "3" "4" "5")))
       (setq val (read-string "Try again dummy! Evaluate 0-5: ")))
     val))
