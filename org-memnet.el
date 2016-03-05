@@ -1,5 +1,5 @@
 ;;; -*- coding: utf-8-unix -*-
-;;; org-memnet.el - Memorize things.
+;;; org-mem.el - Memorize things.
 ;;;
 ;;; Author: Mark Scala <markscala@gmail.com>
 ;;; Version: 0.0.1
@@ -13,20 +13,20 @@
 (require 'org)
 (load "~/code/elisp/my-org-drill/utils.el")
 
-(defun org-memnet-learned (pom)
+(defun org-mem-learned (pom)
   "True just when we've learned an item."
   (= (string-to-number (org-entry-get pom "GRASP")) 5))
 
-(defun org-memnet-get-drill-items ()
+(defun org-mem-get-drill-items ()
   "Collect the (locations of) items to be drilled."
   (let ((res '()))
     (goto-char (point-min))
     (while (not (org-at-heading-p))
       (forward-line))
-    (when (not (org-memnet-learned (point)))
+    (when (not (org-mem-learned (point)))
       (push (point-marker) res))
     (while (org-get-next-sibling)
-      (when (not (org-memnet-learned (point)))
+      (when (not (org-mem-learned (point)))
         (push (point-marker) res)))
     res))
 
@@ -43,24 +43,24 @@
       (setq val (read-string "Try again dummy! Evaluate 0-5: ")))
     val))
 
-(defun org-memnet-reset-outline ()
+(defun org-mem-reset-outline ()
   "Reset outline to the correct starting position."
   (org-global-cycle 4)
   (widen))
 
-(defun org-memnet-drill ()
+(defun org-mem-drill ()
   "Run a drill session.
 
 Nothing fancy here. If an item is not perfectly well known (rated
 5), we review it."
   (interactive)
   (save-excursion
-    (let ((items (shuffle (org-memnet-get-drill-items))))
+    (let ((items (shuffle (org-mem-get-drill-items))))
       (cond
        ((null items)
         (message "Nothing to revue!"))
        (t
-        (org-memnet-reset-outline)
+        (org-mem-reset-outline)
         (block 'while-loop
           (while items
             (let ((curr (pop items)))
@@ -82,5 +82,5 @@ Nothing fancy here. If an item is not perfectly well known (rated
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
                   (setq items (shuffle (push curr items)))))
-              (org-memnet-reset-outline))))))
+              (org-mem-reset-outline))))))
       (widen))))
