@@ -1,0 +1,39 @@
+#+STARTUP:content
+* Test heading 1
+:PROPERTIES:
+:GRASP:    5
+:DATE_LAST_REVIEWED: [2016-03-05 Sat 15:49]
+:END:
+** prompt
+prompt here
+** answer
+answer here
+* Test heading 2
+:PROPERTIES:
+:GRASP:    5
+:DATE_LAST_REVIEWED: [2016-03-05 Sat 15:49]
+:END:
+** prompt
+prompt here
+** answer
+answer here
+** note
+a note here
+* Test heading 3
+:PROPERTIES:
+:GRASP:    0
+:DATE_LAST_REVIEWED: [2016-03-05 Sat 15:49]
+:END:
+** prompt
+prompt here
+** answer
+answer here
+* Test heading 4
+:PROPERTIES:
+:GRASP:    5
+:DATE_LAST_REVIEWED: [2016-03-05 Sat 15:49]
+:END:
+** prompt
+prompt here
+** answer
+answer here
