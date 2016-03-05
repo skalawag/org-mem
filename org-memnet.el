@@ -11,21 +11,7 @@
 ;;; wait.
 
 (require 'org)
-
-;; nicked these next two from the internet, for shuffling lists.
-(defun swap (LIST el1 el2)
-  "in LIST swap indices EL1 and EL2 in place"
-  (let ((tmp (elt LIST el1)))
-    (setf (elt LIST el1) (elt LIST el2))
-    (setf (elt LIST el2) tmp)))
-
-(defun shuffle (LIST)
-  "Shuffle the elements in LIST.
-shuffling is done in place."
-  (loop for i in (reverse (number-sequence 1 (1- (length LIST))))
-        do (let ((j (random (+ i 1))))
-             (swap LIST i j)))
-  LIST)
+(load "~/code/elisp/my-org-drill/utils.el")
 
 (defun org-memnet-learned (pom)
   "True just when we've learned an item."
@@ -44,7 +30,7 @@ shuffling is done in place."
         (push (point-marker) res)))
     res))
 
-(defun next-or-end ()
+(defun quit-or-continue ()
   "Query the user to continue or quit."
   (let ((k (read-string "q-or-any: ")))
     (if (string-equal k "q")
@@ -83,7 +69,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
               (save-excursion
                 (org-goto-first-child)
                 (org-cycle))
-              (when (next-or-end)
+              (when (quit-or-continue)
                 (widen)
                 (return-from 'while-loop))
               (org-show-subtree)
