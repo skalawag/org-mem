@@ -55,7 +55,8 @@ Nothing fancy here. If an item is not perfectly well known (rated
 5), we review it."
   (interactive)
   (save-excursion
-    (let ((items (shuffle (org-mem-get-drill-items))))
+    (let ((items (shuffle (org-mem-get-drill-items)))
+	  (fmt (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]")))
       (cond
        ((null items)
         (message "Nothing to revue!"))
@@ -73,11 +74,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
                 (widen)
                 (return-from 'while-loop))
               (org-show-subtree)
-              (let ((res (get-self-evaluation))
-                    (fmt
-                     (concat "["
-                             (substring (cdr org-time-stamp-formats) 1 -1)
-                             "]")))
+              (let ((res (get-self-evaluation)))
                 (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
