@@ -60,10 +60,10 @@ Nothing fancy here. If an item is not perfectly well known (rated
        ((null items)
         (message "Nothing to revue!"))
        (t
-        (org-mem-reset-outline)
         (block 'while-loop
           (while items
             (let ((curr (pop items)))
+	      (org-mem-reset-outline)
               (org-goto-marker-or-bmk curr)
               (org-narrow-to-subtree)
               (save-excursion
@@ -81,6 +81,5 @@ Nothing fancy here. If an item is not perfectly well known (rated
                 (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
-                  (setq items (shuffle (push curr items)))))
-              (org-mem-reset-outline))))))
+                  (setq items (shuffle (push curr items))))))))))
       (widen))))
