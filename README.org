@@ -51,4 +51,4 @@ drilling items in a file that is formatted any differently from what
 I've described above. Nor can I guarantee that it won't destroy any
 org-file you run it in (not likely, but you can read it and decide
 yourself). It would be best to use a dedicated file, formatted just as
-desribe.
+desribed.
