@@ -56,7 +56,7 @@
 
 (defun quit-or-continue ()
   "Query the user to continue or quit."
-  (let ((k (read-string "q-or-any: ")))
+  (let ((k (read-string "Continue (RET) or Quit (q): ")))
     (if (string-equal k "q")
         t)))
 
