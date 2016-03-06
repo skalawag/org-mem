@@ -29,9 +29,9 @@ time, with all but the first sub-heading folded, like so:
 #+END_EXAMPLE
 
 After you've checked your memory, you can hit RETURN and the other
-sub-headings will be unfolded. At the same time, the you will be
-prompted to evaluate how well you have learned the item. You'll be
-asked to assign yourself a grade between zero and five.
+sub-headings will be unfolded. At the same time, you will be prompted
+to evaluate how well you have learned the item. You'll be asked to
+assign yourself a grade between zero and five.
 
 You may exit at any time with `C-g' (or with `q' when prompted,) or
 else you can continue until all the items are learned to at least
@@ -39,15 +39,16 @@ level 3.
 
 The grading system is dead simple:
 
-  0. It's like you've never seen it before (and maybe you haven't).
-  1. Maybe you have seen it, but you're not remembering at all.
-  2. Not quite.
-  3. Now you're there!
-  4. Even better.
-  5. Ok, now it's locked in, and if you see it again you'll be irritated.
+  - 0: It's like you've never seen it before (and maybe you haven't).
+  - 1: Maybe you have seen it, but you're not remembering at all.
+  - 2: Not quite.
+  - 3: Now you're there!
+  - 4: Even better.
+  - 5: Ok, now it's locked in, and if you see it again you'll be irritated.
 
 I doubt that org-mem is going to be very smart about finding and
 drilling items in a file that is formatted any differently from what
-I've described above. And I cannot guarantee that it won't destroy
-some org-file you run it in (though it's not likely). It would be best
-to use a dedicated file, formatted just as I desribe above.
+I've described above. Nor can I guarantee that it won't destroy any
+org-file you run it in (not likely, but you can read it and decide
+yourself). It would be best to use a dedicated file, formatted just as
+desribe.
