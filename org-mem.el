@@ -62,10 +62,7 @@
     val))
 
 (defun org-mem-drill ()
-  "Run a drill session.
-
-Nothing fancy here. If an item is not perfectly well known (rated
-5), we review it."
+  "Run a drill session."
   (interactive)
   (save-excursion
     (let ((items (shuffle (org-mem-get-drill-items))))
