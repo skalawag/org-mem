@@ -3,6 +3,7 @@
 ;;;
 ;;; Author: Mark Scala <markscala@gmail.com>
 ;;; Version: 0.0.1
+;;; License: MIT
 ;;;
 ;;; Synopsis
 ;;; ========
