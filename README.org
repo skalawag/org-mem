@@ -13,7 +13,7 @@ least) two sub-headings.
 ,** Answer
     1769
 ,** Note
-    You can add as any subsequent sub-headings as you like.
+    You can add as many additional sub-headings as you like.
 #+END_EXAMPLE
 
 As the example says, the first sub-heading is understood to be the
