@@ -12,14 +12,14 @@
 
 (require 'org)
 
-(defun shuffle (LIST)
-  "Shuffle the elements in LIST."
-  (loop for i in (reverse (number-sequence 1 (1- (length LIST))))
+(defun shuffle (lis)
+  "Shuffle the elements in lis."
+  (loop for i in (reverse (number-sequence 1 (1- (length lis))))
         do (let ((j (random (+ i 1)))
-		 (tmp (elt LIST i)))
-	     (setf (elt LIST i) (elt LIST j))
-	     (setf (elt LIST j) tmp)))
-  LIST)
+		 (tmp (elt lis i)))
+	     (setf (elt lis i) (elt lis j))
+	     (setf (elt lis j) tmp)))
+  lis)
 
 (defun org-mem-learned (pom)
   "True just when we've learned an item."
