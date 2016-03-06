@@ -50,6 +50,9 @@ The grading system is dead simple:
   - 4: Even better.
   - 5: Ok, now it's locked in, and if you see it again you'll be irritated.
 
+Items will recur in each review session until they you give them a
+grade of 5. 
+
 I doubt that org-mem is going to be very smart about finding and
 drilling items in a file that is formatted any differently from what
 I've described above. Nor can I guarantee that it won't destroy any
