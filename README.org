@@ -55,13 +55,14 @@ level 3.
 
 The grading system is dead simple:
 
-  - 0: It's like you've never seen it before (and maybe you haven't).
-  - 1: Maybe you have seen it, but you're not remembering at all.
-  - 2: Not quite.
-  - 3: Now you're there!
-  - 4: Even better.
-  - 5: Ok, now it's locked in, and if you see it again you'll be irritated.
-
+#+BEGIN_EXAMPLE
+  0: It's like you've never seen it before (and maybe you haven't).
+  1: Maybe you have seen it, but you're not remembering at all.
+  2: Not quite.
+  3: Now you're there!
+  4: Even better.
+  5: Ok, now it's locked in, and if you see it again you'll be irritated.
+#+END_EXAMPLE
 Items will recur in each review session until they you give them a
 grade of 5. 
 
