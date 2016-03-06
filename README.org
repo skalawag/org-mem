@@ -1,7 +1,7 @@
 * What's this?
 
 Org-mem is a simple memory trainer, because org-drill hasn't been
-working for me for while, and I can't wait. 
+working for me for a while, and I can't wait.
 
 An item for memorizing is assumed to be a top-level headline with (at
 least) two sub-headings. 
