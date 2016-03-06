@@ -5,6 +5,18 @@ working for me for a while, and I can't wait. It is for use with Emacs
 and Org-mode. (If you don't know what they are, this won't be useful to
 you --- check out Google.)
 
+** Setup
+
+Either load org-mem.el directly, or put this in your .emacs or init.el:
+
+#+BEGIN_EXAMPLE emacs-lisp
+  (load "/path/to/org-mem.el")
+#+END_EXAMPLE
+
+Then in a file containing items you'd like to drill for memorization
+(see below), issue the command =M-x org-mem-drill=. The drill session
+should start immediately.
+
 ** Use
 
 An item for memorizing is assumed to be a top-level headline with (at
