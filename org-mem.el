@@ -14,11 +14,12 @@
 ;;; (at least) two subheadings. The first subheading is understood to
 ;;; be the prompt and will be shown first, with all subsequent
 ;;; subheadings folded. After the user checks her memory, she can
-;;; press any key to see the answer (all later subheadings will be
-;;; revealed at once). At the same time, she will be prompted to
-;;; evaluate how well she has learned the item. The user may exit at
-;;; any time with `C-g', or with `q' when prompted, or else she can
-;;; continue until all the items are learned to at least level 3.
+;;; press any key to see the answer (in fact, all later subheadings
+;;; will be revealed at once). At the same time, the user will be
+;;; prompted to evaluate how well she has learned the item. The user
+;;; may exit at any time with `C-g', or with `q' when prompted, or
+;;; else she can continue until all the items are learned to at least
+;;; level 3.
 
 (require 'org)
 
