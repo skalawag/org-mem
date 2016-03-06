@@ -64,7 +64,8 @@ Nothing fancy here. If an item is not perfectly well known (rated
         (block 'while-loop
           (while items
             (let ((curr (pop items)))
-	      (org-mem-reset-outline)
+	      (widen)
+	      (org-global-cycle 4)
               (org-goto-marker-or-bmk curr)
               (org-narrow-to-subtree)
               (save-excursion
