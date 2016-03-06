@@ -55,8 +55,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
 5), we review it."
   (interactive)
   (save-excursion
-    (let ((items (shuffle (org-mem-get-drill-items)))
-	  (fmt (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]")))
+    (let ((items (shuffle (org-mem-get-drill-items))))
       (cond
        ((null items)
         (message "Nothing to revue!"))
