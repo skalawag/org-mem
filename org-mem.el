@@ -68,7 +68,7 @@
     (let ((items (shuffle (org-mem-get-drill-items))))
       (cond
        ((null items)
-        (message "Nothing to revue!"))
+        (message "Nothing to review!"))
        (t
         (block 'while-loop
           (while items
