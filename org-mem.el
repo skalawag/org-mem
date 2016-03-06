@@ -95,3 +95,27 @@
                 (when (< (string-to-number res) 3)
                   (setq items (shuffle (push curr items))))))))))
       (widen))))
+
+;;----------------------------------------------------------------
+;;; Statisitics
+;;----------------------------------------------------------------
+(defun org-mem-learned-p ()
+  (when (string= (org-entry-get "GRASP") "5")
+    t))
+
+(defun org-mem-total-item-count ()
+  (save-excursion
+    (let ((count 1))
+      (org-mem-goto-first-heading)
+      (while (org-get-next-sibling)
+	(setq count (+ count 1)))
+      count)))
+
+(defun org-mem-learned-count ()
+  (save-excursion
+    (let ((count 0))
+      (org-mem-goto-first-heading)
+      (while (org-get-next-sibling)
+	(when (org-mem-learned-p)
+	  (setq count (+ 1 count))))
+      count)))
