@@ -37,12 +37,16 @@
   "True just when we've learned an item."
   (= (string-to-number (org-entry-get pom "GRASP")) 5))
 
+(defun org-mem-goto-first-heading ()
+  (goto-char (point-min))
+    (while (not (org-at-heading-p))
+      (forward-line)))
+
 (defun org-mem-get-drill-items ()
   "Collect the (locations of) items to be drilled."
   (let ((res '()))
     (goto-char (point-min))
-    (while (not (org-at-heading-p))
-      (forward-line))
+    (org-mem-goto-first-heading)
     (when (not (org-mem-learned (point)))
       (push (point-marker) res))
     (while (org-get-next-sibling)
