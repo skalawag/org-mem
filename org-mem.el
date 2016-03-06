@@ -61,11 +61,6 @@
       (setq val (read-string "Try again dummy! Evaluate 0-5: ")))
     val))
 
-(defun org-mem-reset-outline ()
-  "Reset outline to the correct starting position."
-  (org-global-cycle 4)
-  (widen))
-
 (defun org-mem-drill ()
   "Run a drill session.
 
