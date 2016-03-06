@@ -1,0 +1,53 @@
+* What's this?
+
+Org-mem is a simple memory trainer, because org-drill hasn't been
+working for me for while, and I can't wait. 
+
+An item for memorizing is assumed to be a top-level headline with (at
+least) two sub-headings. 
+
+#+BEGIN_EXAMPLE
+,* Top level headline
+,** Prompt
+    Here's some prompt text: What was the year of Napolean's birth?
+,** Answer
+    1769
+,** Note
+    You can add as any subsequent sub-headings as you like.
+#+END_EXAMPLE
+
+As the example says, the first sub-heading is understood to be the
+prompt. When you run org-mem, you will be presented with one item at a
+time, with all but the first sub-heading folded, like so:
+
+#+BEGIN_EXAMPLE
+,* Top level headline
+,** Prompt
+    Here's some prompt text: What was the year of Napolean's birth?
+,** Answer...
+,** Note...
+#+END_EXAMPLE
+
+After you've checked your memory, you can hit RETURN and the other
+sub-headings will be unfolded. At the same time, the you will be
+prompted to evaluate how well you have learned the item. You'll be
+asked to assign yourself a grade between zero and five.
+
+You may exit at any time with `C-g' (or with `q' when prompted,) or
+else you can continue until all the items are learned to at least
+level 3.
+
+The grading system is dead simple:
+
+  0. It's like you've never seen it before (and maybe you haven't).
+  1. Maybe you have seen it, but you're not remembering at all.
+  2. Not quite.
+  3. Now you're there!
+  4. Even better.
+  5. Ok, now it's locked in, and if you see it again you'll be irritated.
+
+I doubt that org-mem is going to be very smart about finding and
+drilling items in a file that is formatted any differently from what
+I've described above. And I cannot guarantee that it won't destroy
+some org-file you run it in (though it's not likely). It would be best
+to use a dedicated file, formatted just as I desribe above.
