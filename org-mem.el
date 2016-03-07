@@ -99,7 +99,7 @@
 ;;----------------------------------------------------------------
 ;;; Statisitics
 ;;----------------------------------------------------------------
-(defun org-mem-total-item-count ()
+(defun org-mem-count-total-items ()
   (save-excursion
     (let ((count 1))
       (org-mem-goto-first-heading)
@@ -107,7 +107,7 @@
 	(setq count (+ count 1)))
       count)))
 
-(defun org-mem-learned-count ()
+(defun org-mem-count-learned ()
   (save-excursion
     (let ((count 0))
       (org-mem-goto-first-heading)
@@ -115,3 +115,8 @@
 	(when (org-mem-learned-p (point))
 	  (setq count (+ 1 count))))
       count)))
+
+(defun org-mem-calc-percentage-learned ()
+  (* 100
+   (/ (float (org-mem-count-learned))
+      (float (org-mem-count-total-items)))))
