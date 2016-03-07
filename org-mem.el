@@ -33,7 +33,7 @@
 	     (setf (elt lis j) tmp)))
   lis)
 
-(defun org-mem-learned (pom)
+(defun org-mem-learned-p (pom)
   "True just when we've learned an item."
   (= (string-to-number (org-entry-get pom "GRASP")) 5))
 
@@ -47,10 +47,10 @@
   (let ((res '()))
     (goto-char (point-min))
     (org-mem-goto-first-heading)
-    (when (not (org-mem-learned (point)))
+    (when (not (org-mem-learned-p (point)))
       (push (point-marker) res))
     (while (org-get-next-sibling)
-      (when (not (org-mem-learned (point)))
+      (when (not (org-mem-learned-p (point)))
         (push (point-marker) res)))
     res))
 
@@ -99,10 +99,6 @@
 ;;----------------------------------------------------------------
 ;;; Statisitics
 ;;----------------------------------------------------------------
-(defun org-mem-learned-p ()
-  (when (string= (org-entry-get "GRASP") "5")
-    t))
-
 (defun org-mem-total-item-count ()
   (save-excursion
     (let ((count 1))
@@ -116,6 +112,6 @@
     (let ((count 0))
       (org-mem-goto-first-heading)
       (while (org-get-next-sibling)
-	(when (org-mem-learned-p)
+	(when (org-mem-learned-p (point))
 	  (setq count (+ 1 count))))
       count)))
