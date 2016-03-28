@@ -54,11 +54,10 @@
         (push (point-marker) res)))
     res))
 
-(defun quit-or-continue ()
+(defun continue? ()
   "Query the user to continue or quit."
-  (let ((k (read-string "Continue (RET) or Quit (q): ")))
-    (if (string-equal k "q")
-        t)))
+  (let ((k (read-string "Press any key to continue...")))
+    t))
 
 (defun get-self-evaluation ()
   "Query the user for self-evaluation."
@@ -86,7 +85,7 @@
               (save-excursion
                 (org-goto-first-child)
                 (org-cycle))
-              (when (quit-or-continue)
+              (when (continue?)
                 (widen)
                 (return-from 'while-loop))
               (org-show-subtree)
