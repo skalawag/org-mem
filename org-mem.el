@@ -85,9 +85,8 @@
               (save-excursion
                 (org-goto-first-child)
                 (org-cycle))
-              (when (continue?)
-                (widen)
-                (return-from 'while-loop))
+	      (continue?)
+	      (widen)
               (org-show-subtree)
               (let ((res (get-self-evaluation)))
                 (org-entry-put curr "GRASP" res)
