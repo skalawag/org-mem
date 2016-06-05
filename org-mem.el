@@ -99,6 +99,6 @@ Nothing fancy here. If an item is not perfectly well known (rated
                 (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
-                  (setq items (shuffle (push curr items)))))
+                  (setq items (shuffle-list (push curr items)))))
               (org-mem-reset-outline))))))
       (widen))))
