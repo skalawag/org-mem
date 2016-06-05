@@ -1,63 +1,42 @@
 ;;; -*- coding: utf-8-unix -*-
 ;;; org-mem.el - Memorize things.
 ;;;
-;;; Author: Mark Scala <markscala@gmail.com>
+;;; Author: Mark Scala <markscala@fastmail.fm>
 ;;; Version: 0.0.1
-;;; License: MIT
 ;;;
 ;;; Synopsis
 ;;; ========
 ;;;
-;;; Org-mem is a simple memory trainer, because org-drill is broken
-;;; and I can't wait.
-;;;
-;;; An item for memorizing is assumed to be a top-level headline with
-;;; (at least) two subheadings. The first subheading is understood to
-;;; be the prompt and will be shown first, with all subsequent
-;;; subheadings folded. After the user checks her memory, she can
-;;; press any key to see the answer (in fact, all later subheadings
-;;; will be revealed at once). At the same time, the user will be
-;;; prompted to evaluate how well she has learned the item. The user
-;;; may exit at any time with `C-g', or with `q' when prompted, or
-;;; else she can continue until all the items are learned to at least
-;;; level 3.
+;;; A simple memory trainer, because org-drill is broken and I can't
+;;; wait.
 
+(eval-when-compile (require 'cl))
 (require 'org)
 
-(defun shuffle (lis)
-  "Shuffle the elements in lis."
-  (loop for i in (reverse (number-sequence 1 (1- (length lis))))
-        do (let ((j (random (+ i 1)))
-		 (tmp (elt lis i)))
-	     (setf (elt lis i) (elt lis j))
-	     (setf (elt lis j) tmp)))
-  lis)
+(load "~/code/elisp/my-org-drill/utils.el")
 
-(defun org-mem-learned-p (pom)
+(defun org-mem-learned (pom)
   "True just when we've learned an item."
   (= (string-to-number (org-entry-get pom "GRASP")) 5))
-
-(defun org-mem-goto-first-heading ()
-  (goto-char (point-min))
-    (while (not (org-at-heading-p))
-      (forward-line)))
 
 (defun org-mem-get-drill-items ()
   "Collect the (locations of) items to be drilled."
   (let ((res '()))
     (goto-char (point-min))
-    (org-mem-goto-first-heading)
-    (when (not (org-mem-learned-p (point)))
+    (while (not (org-at-heading-p))
+      (forward-line))
+    (when (not (org-mem-learned (point)))
       (push (point-marker) res))
     (while (org-get-next-sibling)
-      (when (not (org-mem-learned-p (point)))
+      (when (not (org-mem-learned (point)))
         (push (point-marker) res)))
     res))
 
-(defun continue? ()
+(defun quit-or-continue ()
   "Query the user to continue or quit."
-  (let ((k (read-string "Press any key to continue...")))
-    t))
+  (let ((k (read-string "q-or-any: ")))
+    (if (string-equal k "q")
+        t)))
 
 (defun get-self-evaluation ()
   "Query the user for self-evaluation."
@@ -66,55 +45,60 @@
       (setq val (read-string "Try again dummy! Evaluate 0-5: ")))
     val))
 
+(defun org-mem-reset-outline ()
+  "Reset outline to the correct starting position."
+  (org-global-cycle 4)
+  (widen))
+
+(defun shuffle-list (list)
+  "Randomly permute the elements of LIST (all permutations equally likely)."
+  ;; Adapted from 'shuffle-vector' in cookie1.el
+  ;; from org-drill
+  (let ((i 0)
+        j
+        temp
+        (len (length list)))
+    (while (< i len)
+      (setq j (+ i (random* (- len i))))
+      (setq temp (nth i list))
+      (setf (nth i list) (nth j list))
+      (setf (nth j list) temp)
+      (setq i (1+ i))))
+  list)
+
 (defun org-mem-drill ()
-  "Run a drill session."
+  "Run a drill session.
+
+Nothing fancy here. If an item is not perfectly well known (rated
+5), we review it."
   (interactive)
   (save-excursion
-    (let ((items (shuffle (org-mem-get-drill-items))))
+    (let ((items (shuffle-list (org-mem-get-drill-items))))
       (cond
        ((null items)
         (message "Nothing to review!"))
        (t
+        (org-mem-reset-outline)
         (block 'while-loop
           (while items
             (let ((curr (pop items)))
-	      (widen)
-	      (org-global-cycle 4)
               (org-goto-marker-or-bmk curr)
               (org-narrow-to-subtree)
               (save-excursion
                 (org-goto-first-child)
                 (org-cycle))
-	      (continue?)
-	      (widen)
+              (when (quit-or-continue)
+                (widen)
+                (return-from 'while-loop))
               (org-show-subtree)
-              (let ((res (get-self-evaluation)))
+              (let ((res (get-self-evaluation))
+                    (fmt
+                     (concat "["
+                             (substring (cdr org-time-stamp-formats) 1 -1)
+                             "]")))
+                (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
-                  (setq items (shuffle (push curr items))))))))))
+                  (setq items (shuffle (push curr items)))))
+              (org-mem-reset-outline))))))
       (widen))))
-
-;;----------------------------------------------------------------
-;;; Statisitics
-;;----------------------------------------------------------------
-(defun org-mem-count-total-items ()
-  (save-excursion
-    (let ((count 1))
-      (org-mem-goto-first-heading)
-      (while (org-get-next-sibling)
-	(setq count (+ count 1)))
-      count)))
-
-(defun org-mem-count-learned ()
-  (save-excursion
-    (let ((count 0))
-      (org-mem-goto-first-heading)
-      (while (org-get-next-sibling)
-	(when (org-mem-learned-p (point))
-	  (setq count (+ 1 count))))
-      count)))
-
-(defun org-mem-calc-percentage-learned ()
-  (* 100
-   (/ (float (org-mem-count-learned))
-      (float (org-mem-count-total-items)))))
