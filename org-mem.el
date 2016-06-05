@@ -13,7 +13,7 @@
 (eval-when-compile (require 'cl))
 (require 'org)
 
-(load "~/code/elisp/my-org-drill/utils.el")
+(load "~/dev/elisp/my-org-drill/utils.el")
 
 (defun org-mem-learned (pom)
   "True just when we've learned an item."
@@ -50,22 +50,6 @@
   (org-global-cycle 4)
   (widen))
 
-(defun shuffle-list (list)
-  "Randomly permute the elements of LIST (all permutations equally likely)."
-  ;; Adapted from 'shuffle-vector' in cookie1.el
-  ;; from org-drill
-  (let ((i 0)
-        j
-        temp
-        (len (length list)))
-    (while (< i len)
-      (setq j (+ i (random* (- len i))))
-      (setq temp (nth i list))
-      (setf (nth i list) (nth j list))
-      (setf (nth j list) temp)
-      (setq i (1+ i))))
-  list)
-
 (defun org-mem-drill ()
   "Run a drill session.
 
@@ -73,7 +57,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
 5), we review it."
   (interactive)
   (save-excursion
-    (let ((items (shuffle-list (org-mem-get-drill-items))))
+    (let ((items (shuffle (org-mem-get-drill-items))))
       (cond
        ((null items)
         (message "Nothing to review!"))
@@ -99,6 +83,6 @@ Nothing fancy here. If an item is not perfectly well known (rated
                 (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
                 (org-entry-put curr "GRASP" res)
                 (when (< (string-to-number res) 3)
-                  (setq items (shuffle-list (push curr items)))))
+                  (setq items (shuffle (push curr items)))))
               (org-mem-reset-outline))))))
       (widen))))
