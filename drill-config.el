@@ -15,4 +15,4 @@
 (setq org-use-speed-commands t)
 
 ;;; org-mem
-(load-file "~/code/elisp/my-org-drill/org-mem.el")
+(load-file "~/dev/elisp/my-org-drill/org-mem.el")
