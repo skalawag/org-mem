@@ -50,6 +50,49 @@
   (org-global-cycle 4)
   (widen))
 
+(defun org-mem-collect-prompts-and-answers ()
+  "Collect point-markers for prompts and answers.
+
+Start at top-level headline and search children for prompts and
+answers. Return a list of two point-marker lists, the first for
+prompts and the second for answers."
+  (let ((prompts nil)
+	(answers nil))
+    (save-excursion
+      (org-goto-first-child)
+      (if (string= (org-entry-get (point) "TYPE") "prompt")
+	  (push (point-marker) prompts))
+      (if (string= (org-entry-get (point) "TYPE") "answer")
+	  (push (point-marker) answers))
+      (while (org-get-next-sibling)
+	(if (string= (org-entry-get (point) "TYPE") "prompt")
+	    (push (point-marker) prompts))
+    	(if (string= (org-entry-get (point) "TYPE") "prompt")
+	    (push (point-marker) answers))))
+    (list prompts answers)))
+
+(defun org-mem-show (marker-or-bmk)
+  "Show all subheadings of the current drill item."
+  (save-excursion
+    (org-mem-reset-outline)
+    (org-goto-marker-or-bmk marker-or-bmk)
+    (org-narrow-to-subtree)
+    (org-goto-first-child)
+    (org-cycle)
+    (while (org-get-next-sibling)
+      (org-cycle))))
+
+(defun display-item-or-prompt ()
+  "Randomly select either the prompt or the answer to display."
+  (save-excursion
+    (if (= (random 2) 0)
+	(progn
+	  (org-goto-first-child)
+	  (org-cycle))
+      (progn
+	(org-goto-first-child)
+	(org-get-next-sibling)
+	(org-cycle)))))
 
 (defun org-mem-drill ()
   "Run a drill session.
@@ -69,13 +112,11 @@ Nothing fancy here. If an item is not perfectly well known (rated
             (let ((curr (pop items)))
               (org-goto-marker-or-bmk curr)
               (org-narrow-to-subtree)
-              (save-excursion
-                (org-goto-first-child)
-                (org-cycle))
+	      (display-item-or-prompt)
               (when (quit-or-continue)
                 (widen)
                 (return-from 'while-loop))
-              (org-show-subtree)
+	      (org-mem-show curr)
               (let ((res (get-self-evaluation))
                     (fmt
                      (concat "["
