@@ -50,6 +50,7 @@
   (org-global-cycle 4)
   (widen))
 
+
 (defun org-mem-drill ()
   "Run a drill session.
 
