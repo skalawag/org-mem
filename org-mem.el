@@ -17,7 +17,7 @@
 
 (defun org-mem-learned (pom)
   "True just when we've learned an item."
-  (= (string-to-number (org-entry-get pom "GRASP")) 5))
+  (= (string-to-number (org-entry-get pom "SCORE")) 5))
 
 (defun org-mem-get-drill-items ()
   "Collect the (locations of) items to be drilled."
@@ -123,7 +123,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
                              (substring (cdr org-time-stamp-formats) 1 -1)
                              "]")))
                 (org-entry-put curr "DATE_LAST_REVIEWED" (format-time-string fmt))
-                (org-entry-put curr "GRASP" res)
+                (org-entry-put curr "SCORE" res)
                 (when (< (string-to-number res) 3)
                   (setq items (shuffle (push curr items)))))
               (org-mem-reset-outline))))))
@@ -132,7 +132,7 @@ Nothing fancy here. If an item is not perfectly well known (rated
 (defun org-mem-new-template ()
   (interactive)
   (insert
-   "* Drill\n:PROPERTIES:\n:GRASP:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\nprompt here\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\nanswer here\n\n"))
+   "* Drill\n:PROPERTIES:\n:SCORE:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\nprompt here\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\nanswer here\n\n"))
 
 (defun org-mem-new-item ()
   (interactive)
@@ -140,4 +140,4 @@ Nothing fancy here. If an item is not perfectly well known (rated
 	(prompt (read-string "Prompt: "))
 	(answer (read-string "Answer: ")))
     (insert
-     (concat "* " heading "\n:PROPERTIES:\n:GRASP:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\n" prompt "\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\n" answer "\n\n"))))
+     (concat "* " heading "\n:PROPERTIES:\n:SCORE:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\n" prompt "\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\n" answer "\n\n"))))
