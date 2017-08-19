@@ -1,8 +1,8 @@
 * What's this?
 
-Org-mem is a simple memory trainer, because org-drill hasn't been
-working for me for a while, and I can't wait. It is for use with Emacs
-and Org-mode. (If you don't know what they are, this won't be useful to
+Org-mem is a very simple memory trainer, which I started when
+org-drill stopped working for me. It is for use with Emacs and
+Org-mode. (If you don't know what they are, this won't be useful to
 you --- check out Google.)
 
 ** Setup
@@ -15,39 +15,33 @@ Either load org-mem.el directly, or put this in your .emacs or init.el:
 
 Then in a file containing items you'd like to drill for memorization
 (see below), issue the command =M-x org-mem-drill=. The drill session
-should start immediately.
+should start immediately. 
+
+(For format of drillable items, see below.)
 
 ** Use
 
-An item for memorizing is assumed to be a top-level headline with (at
-least) two sub-headings. 
+An item for memorizing is assumed to be a top-level headline.
 
 #+BEGIN_EXAMPLE
-,* Top level headline
-,** Prompt
-    Here's some prompt text: What was the year of Napolean's birth?
-,** Answer
-    1769
-,** Note
-    You can add as many additional sub-headings as you like.
+  ,* Prompt
+    - answer goes here.
+    - another possible answer or other note.
+  ,** Additional headlines allowed.
+     other notes.
 #+END_EXAMPLE
 
-As the example says, the first sub-heading is understood to be the
-prompt. When you run org-mem, you will be presented with one item at a
-time, with all but the first sub-heading folded, like so:
+When you run org-mem, you will be presented with one item at a time,
+with all but the headline hidden.
 
 #+BEGIN_EXAMPLE
-,* Top level headline
-,** Prompt
-    Here's some prompt text: What was the year of Napolean's birth?
-,** Answer...
-,** Note...
+,* Prompt...
 #+END_EXAMPLE
 
-After you've checked your memory, you can hit RETURN and the other
-sub-headings will be unfolded. At the same time, you will be prompted
-to evaluate how well you have learned the item. You'll be asked to
-assign yourself a grade between zero and five.
+After you've checked your memory, you can hit RETURN and the subtree
+will be unfolded. At the same time, you will be prompted to evaluate
+how well you have learned the item. You'll be asked to assign yourself
+a grade between zero and five.
 
 You may exit at any time with `C-g' (or with `q' when prompted,) or
 else you can continue until all the items are learned to at least
@@ -63,6 +57,7 @@ The grading system is dead simple:
   4: Even better.
   5: Ok, now it's locked in, and if you see it again you'll be irritated.
 #+END_EXAMPLE
+
 Items will recur in each review session until you give them a grade
 of 5.
 
