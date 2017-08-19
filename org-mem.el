@@ -7,8 +7,7 @@
 ;;; Synopsis
 ;;; ========
 ;;;
-;;; A simple memory trainer, because org-drill is broken and I can't
-;;; wait.
+;;; A very simple memory trainer.
 
 (eval-when-compile (require 'cl))
 (require 'org)
