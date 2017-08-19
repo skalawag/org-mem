@@ -91,16 +91,3 @@ Nothing fancy here. If an item is not perfectly well known (rated
                   (setq items (shuffle (push curr items)))))
               (org-mem-reset-outline))))))
       (widen))))
-
-(defun org-mem-new-template ()
-  (interactive)
-  (insert
-   "* Drill\n:PROPERTIES:\n:SCORE:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\nprompt here\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\nanswer here\n\n"))
-
-(defun org-mem-new-item ()
-  (interactive)
-  (let ((heading (read-string "Heading: "))
-	(prompt (read-string "Prompt: "))
-	(answer (read-string "Answer: ")))
-    (insert
-     (concat "* " heading "\n:PROPERTIES:\n:SCORE:    0\n:DATE_LAST_REVIEWED:\n:END:\n** prompt\n:PROPERTIES:\n:TYPE:     prompt\n:END:\n\n" prompt "\n\n** answer\n\n:PROPERTIES:\n:TYPE:     answer\n:END:\n\n" answer "\n\n"))))
