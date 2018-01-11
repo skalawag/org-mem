@@ -16,7 +16,9 @@
 
 (defun org-mem-learned (pom)
   "True just when we've learned an item."
-  (= (string-to-number (org-entry-get pom "SCORE")) 5))
+  (if (org-entry-get pom "SCORE")
+      (= (string-to-number (org-entry-get pom "SCORE")) 5)
+    (org-entry-put pom "SCORE" "0")))
 
 (defun org-mem-get-drill-items ()
   "Collect the (locations of) items to be drilled."
@@ -55,7 +57,27 @@
     (org-mem-reset-outline)
     (org-goto-marker-or-bmk marker-or-bmk)
     (org-narrow-to-subtree)
-    (org-cycle)))
+    (org-cycle '(64))))
+
+(defun org-mem-count-headlines ()
+  "for now, count(headlines) == count(drillable items)"
+  (interactive)
+  (let ((res 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (not (org-at-heading-p))
+	(forward-line))
+      (if (org-at-heading-p)
+	  (setq res (+ 1 res)))
+      (while (org-get-next-sibling)
+	(setq res (+ 1 res)))
+      (message "%d" res))))
+
+(defun org-mem-new (s)
+  "Add required properties for a new entry."
+  (interactive "sNumber or 'rare' or 'none': ")
+  (org-entry-put (point) "SCORE" "0")
+  (org-entry-put (point) "RANK" s))
 
 (defun org-mem-drill ()
   "Run a drill session.
